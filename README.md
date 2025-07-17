@@ -56,7 +56,7 @@ This is a submission for the technical test provided by **PT. EZV Service Indone
 ## 📦 Getting Started
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ezv-frontend-test.git
+git clone https://github.com/basofiibnu/ezv-frontend-test.git
 cd ezv-frontend-test
 yarn install
 yarn dev
