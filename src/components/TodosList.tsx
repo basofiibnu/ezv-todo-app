@@ -3,6 +3,9 @@
 import { useGetTodosQuery, Todo } from '@/services/todos';
 
 import { useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export function TodoList({ initialTodos }: { initialTodos: Todo[] }) {
   const [page, setPage] = useState(0);
@@ -15,30 +18,41 @@ export function TodoList({ initialTodos }: { initialTodos: Todo[] }) {
 
   return (
     <div>
-      {isLoading && <p className="text-gray-500">Loading...</p>}
-
-      <ul className="space-y-3">
-        {todos.map((todo) => (
-          <li
-            key={todo.id}
-            className="p-4 border rounded shadow-sm flex justify-between items-center hover:bg-gray-50"
-          >
-            <div className="flex items-center gap-2">
-              <span className="text-blue-500">🔘</span>
-              <span className="text-gray-800">{todo.title}</span>
-            </div>
-            <span
-              className={`text-sm px-2 py-1 rounded ${
-                todo.completed
-                  ? 'bg-green-100 text-green-700'
-                  : 'bg-red-100 text-red-700'
-              }`}
+      {isLoading ? (
+        <p className="text-gray-500">
+          {' '}
+          <ul>
+            {Array.from({ length: 10 }).map((_, i) => (
+              <li key={i} className="mb-3">
+                <Skeleton height={40} width="100%" />
+              </li>
+            ))}
+          </ul>
+        </p>
+      ) : (
+        <ul className="space-y-3">
+          {todos.map((todo) => (
+            <li
+              key={todo.id}
+              className="p-4 border rounded shadow-sm flex justify-between items-center hover:bg-gray-50"
             >
-              {todo.completed ? 'Done' : 'Open'}
-            </span>
-          </li>
-        ))}
-      </ul>
+              <div className="flex items-center gap-2">
+                <span className="text-gray-500">{todo.id}.</span>
+                <span className="text-gray-800">{todo.title}</span>
+              </div>
+              <span
+                className={`text-sm px-2 py-1 rounded ${
+                  todo.completed
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'
+                }`}
+              >
+                {todo.completed ? 'Done' : 'Open'}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <div className="mt-6 flex justify-between items-center">
         <button

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useCreateTodoMutation } from '@/services/todos';
+import { toast } from 'react-toastify';
 
 export function TodoForm() {
   const [title, setTitle] = useState('');
@@ -9,10 +10,17 @@ export function TodoForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!title.trim()) return;
+    if (!title) return toast.warn('Please enter a title');
 
-    await createTodo({ title, completed: false, userId: 1 });
-    setTitle('');
+    try {
+      await createTodo({ title, completed: false, userId: 1 });
+      toast.success('Todo added!');
+      setTitle('');
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : 'Failed to add todo';
+      toast.error(`Failed to add todo: ${errorMessage}`);
+    }
   };
 
   return (
@@ -23,7 +31,7 @@ export function TodoForm() {
       <input
         type="text"
         className="flex-1 px-4 py-2 rounded border border-gray-300 shadow-sm focus:outline-none focus:ring focus:border-blue-400"
-        placeholder="Enter new todo..."
+        placeholder="Enter new todolist..."
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />

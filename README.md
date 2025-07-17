@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EZV Frontend Developer Technical Test
 
-## Getting Started
+This is a submission for the technical test provided by **PT. EZV Service Indonesia**.
 
-First, run the development server:
+## 💡 Tech Stack
+
+- [Next.js 15 (App Router)](https://nextjs.org)
+- [Redux Toolkit + RTK Query](https://redux-toolkit.js.org/rtk-query/overview)
+- [Tailwind CSS](https://tailwindcss.com/)
+- TypeScript
+
+---
+
+## 🚀 Features Implemented
+
+### 1. ✅ Todo List Page
+- Fetched from `https://jsonplaceholder.typicode.com/todos`
+- Paginated with 10 todos per page using `_start` and `_limit`
+
+### 2. ✅ Create Todo Form
+- Form to POST a new todo to the endpoint
+- Optimistic UI update since JSONPlaceholder doesn't persist data
+
+### 3. ✅ Server-Side Rendering (SSR)
+- `/`: rendered using `fetch()` with `dynamic = "force-dynamic"`
+
+### 4. ✅ Incremental Static Regeneration (ISR)
+- `/isr`: statically generated and revalidated every 10 seconds
+- Data also revalidated on client using RTK Query
+
+### 5. ✅ Type Definitions
+- `Todo` response type created in `store/services/todos.ts`
+
+---
+
+## 📂 Folder Structure
+
+- `src/app`: App router pages using SSR/ISR
+- `src/components`: UI components
+- `src/store`: Redux Toolkit setup with RTK Query
+- `src/services`: API controls and configuration
+- `src/lib`: Server fetch utils
+
+---
+
+
+## 🧠 Approach & Notes
+
+- RTK Query handles all API state logic (loading, error, caching, etc.)
+- For SSR, data is fetched in `getServerSideProps` equivalent (`dynamic = "force-dynamic"`)
+- For ISR, `revalidate = 10` is used, and `useGetTodosQuery()` refetches on mount
+- Since JSONPlaceholder doesn’t store POST data, I used optimistic update in Redux cache to show it immediately
+
+---
+
+## 📦 Getting Started
 
 ```bash
-npm run dev
-# or
+git clone https://github.com/YOUR_USERNAME/ezv-frontend-test.git
+cd ezv-frontend-test
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
